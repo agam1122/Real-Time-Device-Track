@@ -1,5 +1,4 @@
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiYWdhbTExMjIiLCJhIjoiY21kc3RnZzA3MDZ4YzJrcXhoZDFsOXJodCJ9.20YYLVJn70gD4-MSqLi0lA";
+mapboxgl.accessToken = MAPBOX_TOKEN;
 
 const socket = io();
 

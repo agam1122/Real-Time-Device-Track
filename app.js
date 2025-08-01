@@ -1,6 +1,9 @@
 import express from "express";
 import { Server } from "socket.io";
 import http from "http";
+import dotenv from "dotenv";
+dotenv.config();
+
 // import path from "path";
 // import { fileURLToPath } from "url";
 
@@ -32,7 +35,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/", (req, res)=>{
-    res.render("index");
+    res.render("index", { mapboxToken: process.env.MAPBOX_ACCESS_TOKEN });
 });
 
 
