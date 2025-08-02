@@ -7,13 +7,10 @@ dotenv.config();
 // import path from "path";
 // import { fileURLToPath } from "url";
 
-
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
 const app = express();
-
-
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -24,20 +21,24 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 io.on("connection", (socket) => {
-    socket.on("send-location", data =>{
-        io.emit("receive-location", {id: socket.id, ...data});
+  socket.on("send-location", (data) => {
+    io.emit("receive-location", {
+      id: socket.id,
+      latitude: data.latitude,
+      longitude: data.longitude,
+      name: data.name,
+      accuracy: data.accuracy
     });
-    // console.log("Connected");
+  });
+  // console.log("Connected");
 
-    socket.on("disconnect", () => {
-        io.emit("user-disconnected", socket.id);
-    })
+  socket.on("disconnect", () => {
+    io.emit("user-disconnected", socket.id);
+  });
 });
 
-app.get("/", (req, res)=>{
-    res.render("index", { mapboxToken: process.env.MAPBOX_ACCESS_TOKEN });
+app.get("/", (req, res) => {
+  res.render("index", { mapboxToken: process.env.MAPBOX_ACCESS_TOKEN });
 });
-
-
 
 server.listen(3000);

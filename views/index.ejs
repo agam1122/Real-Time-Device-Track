@@ -15,10 +15,24 @@
     <!-- Mapbox CSS -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+
 
 </head>
 
 <body>
+    
+    <!-- Name Input Modal -->
+    <div id="nameModal" class="modal">
+        <div class="modal-content">
+            <h2>Welcome!</h2>
+            <p>Please enter your name to join the live map:</p>
+            <input type="text" id="nameInput" placeholder="Your name" />
+            <button id="submitNameBtn">Join</button>
+        </div>
+    </div>
+    
     <div id="map"></div>
 
     <!-- leaflet js -->
@@ -41,6 +55,9 @@
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
         integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
         crossorigin="anonymous"></script>
+
+    <!-- For accuracy Circle -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 
 
     <script src="/js/script.js"></script>
