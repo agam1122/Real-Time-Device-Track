@@ -16,6 +16,7 @@ html, body{
 }
 
 .modal {
+  display: none; /* hide by default */
   position: fixed;
   z-index: 9999;
   left: 0;
@@ -24,11 +25,17 @@ html, body{
   height: 100%;
   backdrop-filter: blur(6px);
   background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
-  display: flex;
   justify-content: center;
   align-items: center;
+  /* Remove animation from default */
+}
+
+/* Add a class to show the modal and the animation, e.g., 'modal--visible' */
+.modal--visible {
+  display: flex;
   animation: fadeIn 0.5s ease-out;
 }
+
 
 .modal-content {
   background: #ffffff;
