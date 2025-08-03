@@ -4,6 +4,16 @@ mapboxgl.accessToken = MAPBOX_TOKEN;
 // Connect to the Socket.IO server
 const socket = io();
 
+let mySocketId = null; // Declare a global (within this script) variable
+
+const userLocations = {}; // key: socket id, value: { lat, lng }
+
+socket.on("connect", () => {
+  mySocketId = socket.id;
+  console.log("Connected with socket ID:", mySocketId);
+  // Now we can use mySocketId anywhere later in this script
+});
+
 // Global map object and markers keyed by socket id
 let map;
 const markers = {};
@@ -200,6 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
 socket.on("receive-location", (data) => {
   const { id, latitude, longitude, name, accuracy } = data;
   const lngLat = [longitude, latitude];
+  userLocations[id] = { latitude, longitude }; //Save location for later
 
   if (markers[id]) {
     markers[id].setLngLat(lngLat);
@@ -231,46 +242,73 @@ socket.on("user-disconnected", (id) => {
   if (map.getSource(`accuracy-${id}`)) {
     map.removeSource(`accuracy-${id}`);
   }
+  delete userLocations[id];
 });
 
 // Listens for server's "user-list" event and update the sodebar
-socket.on("user-list", (userNames) => {
+// "userArray" is expected to be an array of { id, name },
+// e.g. [{ id: "abc123", name: "Alice" }, { id: "def999", name: "Bob" }]
+socket.on("user-list", (userArray) => {
   const ul = document.getElementById("userList");
   ul.innerHTML = "";
 
-  const myName = localStorage.getItem("userName");
-
-  // If your name is in the list, render it first with special style
-  if(myName && userNames.includes(myName)){
-    const li = document.createElement("li");
-    li.textContent = myName;
-    li.style.fontWeight = "bold";
-    li.style.color = "#007cbf";
-    li.textContent = myName + " (You)";
-    ul.appendChild(li);
-  }
-  userNames.forEach((name) => {
-
-    if (name !== localStorage.getItem("userName")) {
+  // Your own entry always at the top (if present)
+  if (mySocketId) {
+    const me = userArray.find((user) => user.id === mySocketId);
+    if (me) {
       const li = document.createElement("li");
-      li.textContent = name;
+      li.textContent = me.name + " (You)";
+      li.style.fontWeight = "bold";
+      li.style.color = "#007cbf";
+      li.dataset.userId = me.id; // set an attribute just in case
+
+      //Add click handler
+      li.onclick = () => {
+        const loc = userLocations[me.id];
+        if (loc && map) {
+          map.flyTo({
+            center: [loc.longitude, loc.latitude],
+            zoom: 18,
+            speed: 1.2,
+          });
+        }
+      };
+
       ul.appendChild(li);
     }
+  }
 
-    
+  // Add all other users (skip yourself)
+  userArray.forEach((user) => {
+    if (!mySocketId || user.id !== mySocketId) {
+      const li = document.createElement("li");
+      li.textContent = user.name;
+      li.dataset.userId = user.id;
+
+      //Add click handler
+      li.onclick = () => {
+        const loc = userLocations[user.id];
+        if (loc && map) {
+          map.flyTo({
+            center: [loc.longitude, loc.latitude],
+            zoom: 18,
+            speed: 1.2,
+          });
+        }
+      };
+
+      ul.appendChild(li);
+    }
   });
 });
 
-
 // Sidebar open/close on mobile
 document.getElementById("sidebarToggle").onclick = () => {
-    document.getElementById("sidebar").classList.add("open");
-    document.getElementById("sidebarToggle").style.display = "none";    // Hide the toggle when sidebar is open
+  document.getElementById("sidebar").classList.add("open");
+  document.getElementById("sidebarToggle").style.display = "none"; // Hide the toggle when sidebar is open
 };
 
-document.getElementById("sidebarClose").onclick= () => {
-    document.getElementById("sidebar").classList.remove("open");
-    document.getElementById("sidebarToggle").style.display = "block";    // Show the toggle when sidebar is closed
-
+document.getElementById("sidebarClose").onclick = () => {
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("sidebarToggle").style.display = "block"; // Show the toggle when sidebar is closed
 };
-

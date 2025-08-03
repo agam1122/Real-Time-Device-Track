@@ -21,10 +21,11 @@ const server = http.createServer(app);
 const io = new Server(server);
 const users = {};
 
+
 io.on("connection", (socket) => {
   socket.on("send-location", (data) => {
     users[socket.id] = data.name    // save or overwrite name for this socket
-    io.emit("user-list", Object.values(users));
+    io.emit("user-list", Object.entries(users).map(([id, name]) => ({id, name})));
     io.emit("receive-location", {
       id: socket.id,
       latitude: data.latitude,
@@ -38,7 +39,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
 
     delete users[socket.id];
-    io.emit("user-list", Object.values(users));
+    io.emit("user-list", Object.entries(users).map(([id, name]) => ({id, name})));
     io.emit("user-disconnected", socket.id);
   });
 });
