@@ -205,7 +205,9 @@ socket.on("receive-location", (data) => {
     markers[id].setLngLat(lngLat);
 
     if (map.getSource(`accuracy-${id}`)) {
-      map.getSource(`accuracy-${id}`).setData(makeCircle(lngLat, accuracy || 15));
+      map
+        .getSource(`accuracy-${id}`)
+        .setData(makeCircle(lngLat, accuracy || 15));
     }
   } else {
     markers[id] = new mapboxgl.Marker()
@@ -230,3 +232,45 @@ socket.on("user-disconnected", (id) => {
     map.removeSource(`accuracy-${id}`);
   }
 });
+
+// Listens for server's "user-list" event and update the sodebar
+socket.on("user-list", (userNames) => {
+  const ul = document.getElementById("userList");
+  ul.innerHTML = "";
+
+  const myName = localStorage.getItem("userName");
+
+  // If your name is in the list, render it first with special style
+  if(myName && userNames.includes(myName)){
+    const li = document.createElement("li");
+    li.textContent = myName;
+    li.style.fontWeight = "bold";
+    li.style.color = "#007cbf";
+    li.textContent = myName + " (You)";
+    ul.appendChild(li);
+  }
+  userNames.forEach((name) => {
+
+    if (name !== localStorage.getItem("userName")) {
+      const li = document.createElement("li");
+      li.textContent = name;
+      ul.appendChild(li);
+    }
+
+    
+  });
+});
+
+
+// Sidebar open/close on mobile
+document.getElementById("sidebarToggle").onclick = () => {
+    document.getElementById("sidebar").classList.add("open");
+    document.getElementById("sidebarToggle").style.display = "none";    // Hide the toggle when sidebar is open
+};
+
+document.getElementById("sidebarClose").onclick= () => {
+    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("sidebarToggle").style.display = "block";    // Show the toggle when sidebar is closed
+
+};
+
