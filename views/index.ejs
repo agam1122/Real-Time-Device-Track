@@ -38,6 +38,19 @@
 
     <!-- Sidebar list for active users -->
     <div id="sidebar">
+
+
+        <div class="style-select-wrapper">
+            <label for="styleSelect" class="style-select-label">Map Style:</label>
+            <select id="styleSelect" class="style-select">
+                <option value="mapbox://styles/mapbox/streets-v12">Streets</option>
+                <option value="mapbox://styles/mapbox/satellite-v9">Satellite</option>
+                <option value="mapbox://styles/mapbox/outdoors-v12">Outdoors</option>
+                <option value="mapbox://styles/mapbox/dark-v11">Dark</option>
+                <option value="mapbox://styles/mapbox/light-v11">Light</option>
+            </select>
+        </div>
+
         <h3>Active Users</h3>
         <ul id="userList"></ul>
         <button id="sidebarClose" aria-label="Hide active user list">✖</button>

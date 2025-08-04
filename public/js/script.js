@@ -129,6 +129,12 @@ function addAccuracyCircle(id, lngLat, accuracy) {
   }
 }
 
+
+
+let currentMapStyle = localStorage.getItem("mapStyle") || "mapbox://styles/mapbox/streets-v12";
+document.getElementById("styleSelect").value = currentMapStyle;
+
+
 /**
  * Starts the map app: initializes map, sends location to server,
  * and watches position updates.
@@ -139,7 +145,7 @@ function startApp(userName, position) {
   map = new mapboxgl.Map({
     attribution: "&copy; Agam Partap Singh",
     container: "map",
-    style: "mapbox://styles/mapbox/streets-v12",
+    style: currentMapStyle,
     center: [longitude, latitude],
     zoom: 18,
     attributionControl: false,
@@ -194,6 +200,17 @@ document.addEventListener("DOMContentLoaded", () => {
           startApp(name, position);
         });
       }
+
+      document.getElementById("styleSelect").addEventListener("change", function()  {
+        const selectedStyle = this.value;
+        currentMapStyle = selectedStyle;
+        if(map){
+            map.setStyle(currentMapStyle);
+        }
+        
+        localStorage.setItem("mapStyle", selectedStyle);
+
+      })
     },
     (error) => {
       console.error("Geolocation error:", error);
@@ -205,6 +222,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   );
 });
+
+
 
 // Receive location updates from server and update markers
 socket.on("receive-location", (data) => {

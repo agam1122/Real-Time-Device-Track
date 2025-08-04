@@ -247,3 +247,39 @@ html, body{
   }
 }
 
+
+.style-select-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.style-select-label {
+  color: #007cbf;
+  font-weight: 500;
+  font-size: 1.07em;
+  margin-bottom: 5px;
+  letter-spacing: 0.02em;
+}
+
+.style-select {
+  padding: 0.56em 2.2em 0.56em 1em;
+  border: 1.5px solid #b6d6ee;
+  border-radius: 1em;
+  font-size: 1em;
+  background: #f8fbfd url('data:image/svg+xml;utf8,<svg fill=\"%23007cbf\" height=\"16\" viewBox=\"0 0 20 20\" width=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z\"/></svg>') no-repeat right 1em center/1.1em;
+  color: #1571ae;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 124, 191, 0.06);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.style-select:focus, .style-select:hover {
+  border-color: #007cbf;
+  box-shadow: 0 2px 16px rgba(0, 124, 191, 0.12);
+  background-color: #eef7fa;
+}
+
+
