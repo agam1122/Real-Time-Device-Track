@@ -331,3 +331,34 @@ document.getElementById("sidebarClose").onclick = () => {
   document.getElementById("sidebar").classList.remove("open");
   document.getElementById("sidebarToggle").style.display = "block"; // Show the toggle when sidebar is closed
 };
+
+
+document.getElementById("changeNameBtn").addEventListener("click", async () => {
+
+    // Clear saved name
+    localStorage.removeItem("userName");
+
+    // disconnect and reconnect the socket to reset state
+    socket.disconnect();
+
+    // Ask for new userName
+    const newName = await askUserName();
+
+    // Restart the app with new name and current position
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                startApp(newName, position);
+                socket.connect();
+            },
+            (error) => {
+                console.error(error);
+                // Start with default/new name anyway
+                // or alert user
+            }
+        )
+    }
+
+    alert("Name cleared! The app will reload for you to pick a new name.");
+    window.location.reload();
+})

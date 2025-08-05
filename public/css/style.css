@@ -283,3 +283,21 @@ html, body{
 }
 
 
+.change-name-button {
+  margin-top: 12px;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  background-color: #007cbf;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+}
+
+.change-name-button:hover {
+  background-color: #005f94;
+}
+
+
