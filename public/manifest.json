@@ -1,0 +1,21 @@
+{
+  "name": "LiveMap Tracker",
+  "short_name": "LiveMap",
+  "description": "Real-time user tracking and sharing.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fbfd",
+  "theme_color": "#007cbf",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

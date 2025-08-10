@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-Time Tracking App</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#007cbf">
 
     <!-- Leaflet css -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
@@ -68,9 +70,23 @@
     <!-- Google Maps JS API -->
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPvWikaPzNGgg0NpJqKDdX5SRbiqIr-4U"></script> -->
 
+
     <script>
+
         const MAPBOX_TOKEN = "<%= mapboxToken %>";
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker.register("/service-worker.js").then(function (reg) {
+                    console.log("Service Worker registered with scope:", reg.scope);
+                }).catch(function (err) {
+                    console.error("Service Worker registration failed:", err);
+                });
+            });
+        }
     </script>
+
+    
 
     <!-- Mapbox JS -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
