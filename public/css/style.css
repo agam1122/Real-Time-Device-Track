@@ -1,257 +1,213 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/*------------------- Universal Styles -------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html, body{
-    height: 100%;
-    width: 100%;
-    font-family: 'Inter', sans-serif;
-}
-
-#map{
-    height: 100%;
-    width: 100%;
-}
-
-.modal {
-  display: none; /* hide by default */
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
+html, body {
   height: 100%;
-  backdrop-filter: blur(6px);
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+  width: 100%;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f7fb;
+  color: #222;
+}
+
+/*------------------- Map Styles -------------------*/
+#map {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+/*------------------- Modal Styles ------------------*/
+.modal {
+  display: none;
+  position: fixed;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  z-index: 9999;
   justify-content: center;
   align-items: center;
-  /* Remove animation from default */
+  backdrop-filter: blur(6px);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.42));
 }
 
-/* Add a class to show the modal and the animation, e.g., 'modal--visible' */
 .modal--visible {
   display: flex;
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.4s ease;
 }
 
-
 .modal-content {
-  background: #ffffff;
-  padding: 2.5rem 2rem;
-  border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  text-align: center;
+  background: #fff;
+  padding: 2.3rem 2rem 2rem;
+  border-radius: 22px;
+  box-shadow: 0 8px 24px rgba(0, 124, 191, 0.13), 0 2px 8px rgba(0,0,0,0.09);
   width: 90%;
-  max-width: 400px;
-  animation: slideUp 0.4s ease-out;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 390px;
+  text-align: center;
+  animation: slideUp 0.36s ease;
 }
 
 .modal-content h2 {
-  margin-bottom: 0.5rem;
-  color: #333;
-  font-size: 1.8rem;
+  margin-bottom: 0.7rem;
+  font-size: 1.6rem;
+  color: #007cbf;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .modal-content p {
   color: #666;
   font-size: 1rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.15rem;
 }
 
 .modal-content input {
-  padding: 0.7rem 1rem;
+  padding: 0.78rem 1.1rem;
   width: 100%;
-  font-size: 1rem;
-  border: 1px solid #ccc;
+  font-size: 1em;
+  border: 1.5px solid #bee7ff;
   border-radius: 10px;
   outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
+  margin-bottom: 0.6em;
+  background: #f8fbfd;
 }
 
 .modal-content input:focus {
   border-color: #007cbf;
-  box-shadow: 0 0 5px rgba(0, 124, 191, 0.4);
+  box-shadow: 0 0 6px #007cbf33;
+}
+.modal-content input.error {
+  border-color: #e74c3c;
+  background: #fff7f7;
 }
 
 .modal-content button {
-  margin-top: 1.5rem;
-  padding: 0.7rem 1.5rem;
-  font-size: 1rem;
+  margin-top: 1.2rem;
+  padding: 0.68rem 1.5rem;
+  font-size: 1em;
   font-weight: 600;
-  background-color: #007cbf;
-  color: white;
+  background: #007cbf;
+  color: #fff;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 8px #007cbf1a;
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
 .modal-content button:hover {
-  background-color: #005f94;
+  background: #005f94;
+  box-shadow: 0 3px 18px #007cbf33;
 }
 
-.modal-content input.error {
-  border-color: red;
-}
-
-/* Smooth fade and slide animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
+/* Animation Keyframes */
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 @keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(42px); opacity:0; }
+  to   { transform: translateY(0); opacity:1; }
 }
 
+/*------------------- Sidebar Styles ------------------*/
 #sidebar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 220px;
-  height: 100%;
-  background: rgba(255,255,255,0.92);
-  border-right: 1px solid #e5e5e5;
-  padding: 20px 10px 10px 20px;
-  z-index: 1000;
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  background: rgba(255,255,255,0.96);
+  box-shadow: 2px 0 14px #aad3ef33;
+  z-index: 100;
+  padding: 1.2em 1.4em 1em 1.18em;
+  width: 290px;
+  overflow-y: auto;
+  transform: translateX(-110%);
+  transition: transform 0.33s cubic-bezier(.46, -0.07, .4, 1.73);
   display: flex;
   flex-direction: column;
+  gap: 0.7em;
 }
 
+#sidebar.open {
+  transform: translateX(0);
+}
+
+/* Sidebar Contents */
 #sidebar h3 {
   margin-bottom: 8px;
-  font-size: 1.2rem;
+  font-size: 1.14rem;
+  color: #007cbf;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* User List */
+#userList {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.4em;
+}
+
+#userList li {
+  margin: 8px 0;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #eef7fa;
+  box-shadow: 0 1px 4px #007cbf10;
+  color: #155482;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+#userList li:hover {
+  background: #e2f2fc;
+}
+#userList li[data-user-id]:active {
+  background: #bee7ff;
+}
+
+/* Style top "You" entry extra-bold */
+#userList li[data-user-id]:first-child {
+  font-weight: bold;
   color: #007cbf;
 }
 
-#userList {
-  list-style: none;
-  padding: 0;
-  font-size: 1rem;
+/* Sidebar Buttons */
+.change-name-button, .share-toggle-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 0.98rem;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.26s, color 0.18s;
+  align-self: flex-start;
+}
+.change-name-button {
+  background: #007cbf;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.change-name-button:hover {
+  background: #005f94;
+}
+
+.share-toggle-button {
+  background: #f3ca38;
   color: #333;
+  margin-bottom: 4px;
+  box-shadow: 0 2px 8px #f3ca3822;
 }
+.share-toggle-button.off { background: #f14545; color: #fff; }
+.share-toggle-button.on { background: #007cbf; color: #fff; }
+.share-toggle-button:hover { opacity: 0.95; }
 
-#userList li {
-  margin: 8px 0;
-  padding: 6px 8px;
-  border-radius: 8px;
-  background: #f1f1f1;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-
-#map {
-  /* Shift map right to make space for sidebar */
-  position: absolute;
-  left: 220px;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  height: 100%;
-  width: auto;
-}
-
-
-#sidebar {
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 220px;
-  background: rgba(255,255,255,0.95);
-  border-right: 1px solid #e5e5e5;
-  padding: 20px 10px 10px 20px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
-
-/* Hide close button on desktop */
-#sidebarClose {
-  display: none;
-}
-
-#userList {
-  list-style: none;
-  padding: 0;
-  font-size: 1rem;
-  color: #333;
-  margin: 0;
-}
-
-#userList li {
-  margin: 8px 0;
-  padding: 6px 8px;
-  border-radius: 8px;
-  background: #f1f1f1;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-
-/* Toggle button, initially hidden */
-#sidebarToggle {
-  display: none;
-}
-
-/* --- Responsive for mobile screens --- */
-@media (max-width: 700px) {
-  #sidebar {
-    width: 85vw;
-    max-width: 340px;
-    transform: translateX(-100%);
-    box-shadow: 2px 0 12px rgba(0,0,0,0.11);
-  }
-  #sidebar.open {
-    transform: translateX(0);
-  }
-  #sidebarClose {
-    display: block;
-    position: absolute; right: 16px; top: 8px;
-    background: none; border: none; font-size: 1.3em; color: #555;
-    padding: 4px;
-  }
-  #sidebarToggle {
-    display: block;
-    position: absolute; left: 10px; top: 10px; z-index: 1200;
-    background: #007cbf; color: #fff; border: none; border-radius: 50%;
-    width: 42px; height: 42px; font-size: 1.22em; box-shadow: 0 2px 8px #007cbf22;
-  }
-  #map {
-    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-}
-
-/* On desktop, always visible sidebar, no toggle */
-@media (min-width: 701px) {
-  #sidebar {
-    transform: translateX(0) !important;
-  }
-  #sidebarToggle, #sidebarClose {
-    display: none !important;
-  }
-  #map {
-    left: 220px;
-    right: 0;
-    width: auto;
-    top: 0; bottom: 0;
-    position: absolute;
-  }
-}
-
-
+/* Style Select Dropdown */
 .style-select-wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .style-select-label {
@@ -267,37 +223,113 @@ html, body{
   border: 1.5px solid #b6d6ee;
   border-radius: 1em;
   font-size: 1em;
-  background: #f8fbfd url('data:image/svg+xml;utf8,<svg fill=\"%23007cbf\" height=\"16\" viewBox=\"0 0 20 20\" width=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z\"/></svg>') no-repeat right 1em center/1.1em;
+  background: #f8fbfd url('data:image/svg+xml;utf8,<svg fill="%23007cbf" height="16" viewBox="0 0 20 20" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>') no-repeat right 1em center/1.1em;
   color: #1571ae;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(0, 124, 191, 0.06);
+  box-shadow: 0 2px 8px #007cbf0b;
   appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
 }
 .style-select:focus, .style-select:hover {
   border-color: #007cbf;
-  box-shadow: 0 2px 16px rgba(0, 124, 191, 0.12);
+  box-shadow: 0 2px 18px #aad3ef33;
   background-color: #eef7fa;
 }
 
-
-.change-name-button {
-  margin-top: 12px;
-  padding: 8px 14px;
-  font-size: 0.95rem;
-  background-color: #007cbf;
-  color: white;
+/* Sidebar Toggle/Close Buttons */
+#sidebarToggle {
+  display: none;
+  position: fixed;
+  top: 18px; left: 16px;
+  background: #007cbf;
+  color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 50%;
+  width: 42px; height: 42px;
+  font-size: 1.25em;
+  box-shadow: 0 2px 9px #007cbf26;
+  z-index: 200;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: flex-start;
+}
+#sidebarClose {
+  display: none; /* will be shown only on mobile */
 }
 
-.change-name-button:hover {
-  background-color: #005f94;
+/*------------------ Responsive Mobile Styles ---------------------*/
+@media (max-width: 700px) {
+  #sidebar {
+    width: 98vw;
+    max-width: 370px;
+    padding: 0.9em 1em 1em 1em;
+    font-size: 1.07em;
+    transform: translateX(-100%);
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 0 14px 14px 0;
+    box-shadow: 2px 0 16px #007cbf22;
+  }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  #sidebarClose {
+    display: block;
+    position: absolute;
+    top: 8px; right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.32em;
+    color: #555;
+    cursor: pointer;
+    z-index: 101;
+  }
+  #sidebarToggle {
+    display: block;
+    position: absolute;
+    left: 10px; top: 10px;
+    z-index: 1200;
+  }
+  #map {
+    left: 0; right: 0; top: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    border-radius: 0;
+  }
 }
 
+@media (min-width: 701px) {
+  #sidebar {
+    width: 220px;
+    max-width: 320px;
+    border-radius: 0 12px 12px 0;
+    transform: translateX(0) !important;
+    box-shadow: 2px 0 20px #007cbf13;
+  }
+  #sidebarToggle, #sidebarClose {
+    display: none !important;
+  }
+  #map {
+    left: 220px;
+    top: 0; right: 0; bottom: 0;
+    width: auto;
+    position: absolute;
+  }
+}
 
+/*------------------ Extra Touches ---------------------*/
+/* Disable scrollbar thumb highlighting in sidebar */
+#sidebar::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+#sidebar::-webkit-scrollbar-thumb {
+  background: #bee7ff;
+  border-radius: 7px;
+}
+
+/* For smoother transitions and sharp looking app */
+body, html, #map, #sidebar {
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}

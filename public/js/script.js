@@ -321,16 +321,18 @@ socket.on("user-list", (userArray) => {
   });
 });
 
-// Sidebar open/close on mobile
+// Open sidebar (show on mobile, hide button)
 document.getElementById("sidebarToggle").onclick = () => {
   document.getElementById("sidebar").classList.add("open");
-  document.getElementById("sidebarToggle").style.display = "none"; // Hide the toggle when sidebar is open
+  document.getElementById("sidebarToggle").style.display = "none";
 };
 
+// Close sidebar (hide, show button)
 document.getElementById("sidebarClose").onclick = () => {
   document.getElementById("sidebar").classList.remove("open");
-  document.getElementById("sidebarToggle").style.display = "block"; // Show the toggle when sidebar is closed
+  document.getElementById("sidebarToggle").style.display = "block";
 };
+
 
 
 document.getElementById("changeNameBtn").addEventListener("click", async () => {
@@ -362,3 +364,39 @@ document.getElementById("changeNameBtn").addEventListener("click", async () => {
     alert("Name cleared! The app will reload for you to pick a new name.");
     window.location.reload();
 })
+
+
+
+// Simple left/right swipe detection to toggle sidebar on mobile
+let touchStartX = null;
+let touchEndX = null;
+const threshold = 35; // Minimum swipe distance in px
+
+document.addEventListener('touchstart', function(e) {
+  if (e.touches.length === 1) touchStartX = e.touches[0].clientX;
+});
+
+document.addEventListener('touchmove', function(e) {
+  if (e.touches.length === 1) touchEndX = e.touches[0].clientX;
+});
+
+document.addEventListener('touchend', function() {
+  if (touchStartX == null || touchEndX == null) return;
+  const dx = touchEndX - touchStartX;
+
+  // Swipe from left edge to right: open sidebar
+  if (touchStartX < 60 && dx > threshold && !document.getElementById("sidebar").classList.contains('open')) {
+    document.getElementById("sidebar").classList.add("open");
+    document.getElementById("sidebarToggle").style.display = "none";
+  }
+  // Swipe from right to left: close sidebar
+  if (dx < -threshold && document.getElementById("sidebar").classList.contains('open')) {
+    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("sidebarToggle").style.display = "block";
+  }
+  touchStartX = touchEndX = null;
+});
+
+
+
+
